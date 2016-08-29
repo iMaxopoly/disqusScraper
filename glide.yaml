@@ -1,0 +1,3 @@
+package: disqusUserPostsScraper
+import:
+- package: gopkg.in/go-playground/pool.v3
