@@ -63,15 +63,18 @@ hereWeGoAgain:
 isPrivate verifies whether given forum name is private
 */
 func (m *ClassForum) isPrivate() {
-	var c Cursor
+	debugLog("func ClassForum.isPrivate() called")
 
-	err := json.Unmarshal([]byte(getRequest(fmt.Sprintf(linksByDirectThreadURL, m.ForumName, "", m.Key))), &c)
+	var r ForumActivityResponseModel
+
+	err := json.Unmarshal([]byte(getRequest(fmt.Sprintf(linksByDirectThreadURL, m.ForumName, "", m.Key))), &r)
 	handleErrorAndPanic(err)
 
-	switch c.HasNext {
-	case true:
+	if len(r.Response.Activities) == 0 {
 		m.IsPrivate = true
-	case false:
+	} else {
 		m.IsPrivate = false
 	}
+
+	debugLog("func ClassForum.isPrivate() returning with m.IsPrivate set to", m.IsPrivate, len(r.Response.Activities))
 }

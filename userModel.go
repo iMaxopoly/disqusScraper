@@ -1,6 +1,41 @@
 package main
 
 /*
+ForumActivityResponseModel is the model container for forum activities, useful in the case where the community is small
+and cursor.HasNext returns empty. We aren't able to guess whether the community is private or empty or just small.
+*/
+type ForumActivityResponseModel struct {
+	Response struct {
+		Activities []struct {
+			Items []struct {
+				SelectedPost    interface{} `json:"selectedPost"`
+				Object          string      `json:"object"`
+				ThreadOverrides interface{} `json:"threadOverrides"`
+				Routings        []struct {
+					Type     string `json:"type"`
+					Relation string `json:"relation"`
+				} `json:"routings"`
+				ID          string        `json:"id"`
+				Verb        string        `json:"verb"`
+				RecentPosts []interface{} `json:"recentPosts"`
+				Published   string        `json:"published"`
+				Type        string        `json:"type"`
+				IsUnread    bool          `json:"isUnread"`
+			} `json:"items"`
+			Verb   string `json:"verb"`
+			Actors struct {
+				TotalItems int           `json:"totalItems"`
+				Items      []interface{} `json:"items"`
+			} `json:"actors"`
+			Published  string `json:"published"`
+			TotalItems int    `json:"totalItems"`
+			Type       string `json:"type"`
+			ID         string `json:"id"`
+		} `json:"activities"`
+	} `json:"response"`
+}
+
+/*
 Cursor is a model container to manage navigation from one endpoint to another in API requests
 */
 type Cursor struct {

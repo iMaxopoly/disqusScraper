@@ -13,11 +13,12 @@ ClassLinkCollector is our component that automatically allocates workers to rang
 they have posted based on given forum name(or everything) and ultimately filters for duplicates.
 */
 type ClassLinkCollector struct {
-	Workers   uint
-	ForumName string
-	Key       string
-	NoNoise   bool
-	Users     []User
+	Workers     uint
+	ForumName   string
+	ResultCount uint
+	Key         string
+	NoNoise     bool
+	Users       []User
 }
 
 /*
@@ -68,12 +69,14 @@ notAllOverAgain:
 		goto hereWeGoAgain
 	}
 
-	countLinks := 0
+	var countLinks uint
 	// Write to File
 	for i := 0; i < len(links); i++ {
 		writeToFile(m.ForumName+".txt", links[i])
 		countLinks++
 	}
+
+	m.ResultCount = countLinks
 	debugLog("func ClassLinkCollector.processPublic() returning with", countLinks, "acquired")
 }
 
@@ -96,7 +99,7 @@ func (m *ClassLinkCollector) processPrivate() {
 		batch.QueueComplete()
 	}()
 
-	countLinks := 0
+	var countLinks uint
 	for links := range batch.Results() {
 
 		if err := links.Error(); err != nil {
@@ -111,6 +114,7 @@ func (m *ClassLinkCollector) processPrivate() {
 		}
 	}
 
+	m.ResultCount = countLinks
 	debugLog("func ClassLinkCollector.processPrivate() returning with", countLinks, "acquired")
 }
 

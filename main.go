@@ -63,5 +63,5 @@ func main() {
 		mrLinkCollector.processPublic()
 	}
 
-	debugLog(fmt.Sprintf("[[%s WORK COMPLETE]]", *forumName))
+	debugLog(fmt.Sprintf("[[%s WORK COMPLETE WITH %d links acquired]]", *forumName, mrLinkCollector.ResultCount))
 }
