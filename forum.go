@@ -13,7 +13,7 @@ type ClassForum struct {
 	Users     []User
 	ForumName string
 	Key       string
-	IsPrivate string
+	IsPrivate bool
 }
 
 /*
@@ -59,6 +59,9 @@ hereWeGoAgain:
 	debugLog("func ClassForum.getCommenters() returning with users set [", len(m.Users), m.Users, "]")
 }
 
+/*
+isPrivate verifies whether given forum name is private
+*/
 func (m *ClassForum) isPrivate() {
 	var c Cursor
 

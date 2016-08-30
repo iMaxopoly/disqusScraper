@@ -24,7 +24,7 @@ type ClassLinkCollector struct {
 processPublic fetches all the links from all the public forum of a given forum name.
 */
 func (m *ClassLinkCollector) processPublic() {
-	debugLog("func ClassLinkCollector.processPrivate() called")
+	debugLog("func ClassLinkCollector.processPublic() called")
 	cursor := ""
 
 	var links []string
@@ -35,9 +35,7 @@ hereWeGoAgain:
 	body := getRequest(fmt.Sprintf(linksByDirectThreadURL, m.ForumName, cursor, m.Key))
 
 	err := json.Unmarshal([]byte(body), &c)
-	if err != nil {
-		return []string{}, err
-	}
+	handleErrorAndPanic(err)
 
 notAllOverAgain:
 	slugIndex := strings.Index(body, patternFeed)
