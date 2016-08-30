@@ -32,7 +32,7 @@ where;
 
 ### Todos
 
-  - Filter User comments to only show links that belong to provided forum name. (Done)
+ - Filter User comments to only show links that belong to provided forum name. (Done)
  - Get all links from a given disqus forum name without getting their users if the forum isn’t private. (Probably done)
  - Write Tests
  - Add Web Interface
